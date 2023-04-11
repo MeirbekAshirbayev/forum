@@ -2,6 +2,9 @@ package repo
 
 import (
 	"forum/entity"
+	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type IProfile interface {
@@ -12,6 +15,8 @@ type IProfile interface {
 }
 
 func (r repo) CreateProfile(p *entity.Profile) error {
+	log.Println("k")
+
 	stmt, err := r.db.Prepare("INSERT INTO profiles (user_id, name, bio, image_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		r.log.Printf("error while to prepare datas to write into the profile table: %s\n", err.Error())

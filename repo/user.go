@@ -2,6 +2,9 @@ package repo
 
 import (
 	"forum/entity"
+	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type IUser interface {
@@ -13,6 +16,8 @@ type IUser interface {
 
 // createUser creates a new user in the User table
 func (r repo) CreateUser(user *entity.User) error {
+	log.Println("k")
+
 	stmt, err := r.db.Prepare("INSERT INTO users (username, password, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?)")
 	if err != nil {
 		r.log.Printf("error while to prepare datas to write into the user table: %s\n", err.Error())

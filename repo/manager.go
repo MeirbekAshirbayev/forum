@@ -2,7 +2,10 @@ package repo
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type IDb interface {
@@ -20,7 +23,8 @@ func New() (IDb, error) {
 	// Open SQLite3 database
 	db, err := sql.Open("sqlite3", "database.db")
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("error while create table of database %s\n", err.Error())
+		return nil, err
 	}
 	err = createTables(db)
 	if err != nil {
@@ -34,6 +38,7 @@ func New() (IDb, error) {
 
 // createTables creates User, Post, Comment, and Profile tables
 func createTables(db *sql.DB) error {
+	fmt.Println("create db")
 	// Create User table
 	_, err := db.Exec(`
 		CREATE TABLE IF NOT EXISTS users (

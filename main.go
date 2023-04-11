@@ -1,45 +1,27 @@
 package main
 
 import (
-	"database/sql"
-	"log"
-	"time"
-
-	"forum/entity"
-
-	_ "github.com/mattn/go-sqlite3"
+	"fmt"
+	"forum/repo"
 )
 
 func main() {
-	// Open SQLite3 database
-	db, err := sql.Open("sqlite3", "users.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+	fmt.Println("kirdim")
+	r, e := repo.New()
+	fmt.Println(r, e)
+	// if e != nil {
+	// 	fmt.Println("oibai owibka: ", e)
+	// 	os.Exit(1)
+	// }
+	// fmt.Println("repo awtim")
 
-	// Create User table if not exists
-	_, err = db.Exec(`
-		CREATE TABLE IF NOT EXISTS users (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			username TEXT UNIQUE,
-			password TEXT,
-			email TEXT UNIQUE,
-			created_at TIMESTAMP,
-			updated_at TIMESTAMP
-		)
-	`)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// req := &entity.Post{
+	// 	UserId:    1,
+	// 	Title:     "Ekinwi bolma",
+	// 	Content:   "asdfasfasfdasfdsafd safdsafdsafdsafdsafd sadfsadf",
+	// 	CreatedAt: time.Now(),
+	// }
+	// fmt.Println("post dayin", req)
 
-	// Example usage:
-	// Create a new user
-	newUser := entity.User{
-		Username:  "john_doe",
-		Password:  "password123",
-		Email:     "john@example.com",
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-	}
+	// fmt.Println(r.CreatePost(req))
 }

@@ -2,6 +2,9 @@ package repo
 
 import (
 	"forum/entity"
+	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type IPost interface {
@@ -12,6 +15,8 @@ type IPost interface {
 }
 
 func (r repo) CreatePost(p *entity.Post) error {
+	log.Println("k")
+
 	stmt, err := r.db.Prepare("INSERT INTO posts (user_id, title, content, created_at, updated_at, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		r.log.Printf("error while to prepare post datas to write into the post table: %s\n", err.Error())

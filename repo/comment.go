@@ -2,6 +2,9 @@ package repo
 
 import (
 	"forum/entity"
+	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type IComment interface {
@@ -12,6 +15,7 @@ type IComment interface {
 }
 
 func (r repo) СreateComment(c *entity.Comment) error {
+	log.Println("k")
 	stmt, err := r.db.Prepare("INSERT INTO comments (user_id, post_id, content, created_at, updated_at, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		r.log.Printf("error while to prepare datas to write into the comment table: %s\n", err.Error())
